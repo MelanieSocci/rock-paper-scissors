@@ -9,22 +9,22 @@ def player(prev_play, opponent_history=[]):
 
     guess = "R"
 
-    # Usa los últimos 3 movimientos del oponente para detectar patrones
+    # Compara las ultimas 4 jugadas
     if len(opponent_history) >= 4:
         ultimas_jugadas = "".join(opponent_history[-4:])
-        patterns = {}
+        patrones = {}
 
         # Busca patrones en el historial
         for i in range(len(opponent_history) - 4):
-            pattern = "".join(opponent_history[i:i+4])
+            patron = "".join(opponent_history[i:i+4])
             next_move = opponent_history[i + 4]
-            if pattern not in patterns:
-                patterns[pattern] = {"R": 0, "P": 0, "S": 0}
-            patterns[pattern][next_move] += 1
+            if patron not in patrones:
+                patrones[patron] = {"R": 0, "P": 0, "S": 0}
+            patrones[patron][next_move] += 1
 
-        # Si se encuentra el patrón, predice la jugada más probable
-        if ultimas_jugadas in patterns:
-            prediccion = max(patterns[ultimas_jugadas], key=patterns[ultimas_jugadas].get)
+        # Si esta dentro del patron, predice la jugada más probable
+        if ultimas_jugadas in patrones:
+            prediccion = max(patrones[ultimas_jugadas], key=patrones[ultimas_jugadas].get)
             guess = jugada_ganadora(prediccion)
 
     return guess
